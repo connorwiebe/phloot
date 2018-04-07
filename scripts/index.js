@@ -63,7 +63,6 @@ $('.get').on('click', async e => {
   }).then(res => res.json())
   songs.forEach(song => {
     $('.recommendation').append(recommendation(song))
-    console.log($('.thumbnail img')[0])
     loaded($('.thumbnail img')[0], (err, alreadyLoaded) => {
       $('.flute').fadeOut(() => {
         $('.song').fadeIn()
