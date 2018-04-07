@@ -1,0 +1,8 @@
+for song in songs
+  li.song
+    .thumbnail
+      img(src=song.image, width='200', height='200')
+      .fav
+    .metadata
+      p.name= song.name
+      p.artist= song.artist

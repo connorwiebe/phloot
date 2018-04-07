@@ -1,0 +1,42 @@
+{
+  "name": "phloot",
+  "version": "1.0.0",
+  "description": "Find new music!",
+  "main": "app.js",
+  "author": "Connor Wiebe",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "bottleneck": "^2.0.0",
+    "compression": "^1.7.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "image-loaded": "0.0.2",
+    "is-json": "^2.0.1",
+    "jquery": "^3.2.1",
+    "pug": "^2.0.0-rc.4",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "serve-favicon": "^2.4.5",
+    "uglify-es": "^3.2.2"
+  },
+  "devDependencies": {
+    "browserify": "^14.5.0",
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.13.3",
+    "strip-ansi": "^4.0.0"
+  },
+  "scripts": {
+    "start-dev": "node utils/bin/start.js",
+    "sass-build": "find sass -type f -not -name '*_*' | node-sass sass -do public",
+    "sasquatch": "node-sass sass -wdo public",
+    "remove": "find public -maxdepth 1 -type f -not -name '*min*' -delete",
+    "remove-everything": "find public -maxdepth 1 -type f -not -name 'robots.txt' -delete",
+    "bundle": "node utils/bin/bundle.js",
+    "minify": "node utils/bin/minify.js",
+    "uglify": "node utils/bin/uglify.js",
+    "prod": "npm run sass-build && npm run minify && npm run bundle prod && npm run uglify",
+    "start": "NODE_ENV=production node app.js"
+  }
+}

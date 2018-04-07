@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+  head
+    title phloot | Find new music!
+    link(rel='stylesheet' href=`/index${min}.css`)
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Material+Icons')
+  body
+    .wrapper
+      header
+        h1.hero phloot
+      nav
+        .search
+          form(method='post')
+            input(type='text' placeholder='Add your favourite artists')
+      .content
+        .list
+        .get get recommendation
+        .recommendation
+          .loading
+            .flute
+    script(src='/index.js')

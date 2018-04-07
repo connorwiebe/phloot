@@ -1,0 +1,185 @@
+@font-face {
+  font-family: Avenir-Thin;
+  src: url("fonts/Avenir/avenir-next-thin.ttf"); }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1c2023;
+  letter-spacing: -0.15px;
+  font: 14px "Avenir-Thin", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+
+p {
+  margin: 0; }
+
+img, i {
+  vertical-align: bottom; }
+
+.wrapper .show {
+  display: flex; }
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  min-height: 100vh; }
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 75px; }
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px; }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  max-width: 1360px; }
+
+form {
+  display: flex; }
+
+input {
+  background: #f7f9fc;
+  min-width: 250px;
+  outline-width: 0;
+  border-radius: 0;
+  font-size: 0.9rem;
+  padding: 10px 12.5px;
+  border: none;
+  color: #1c2023; }
+
+::-webkit-input-placeholder {
+  color: #7a808a;
+  font-weight: 300; }
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px; }
+
+.item-artist {
+  background: #f7f9fc;
+  color: #1C2023;
+  padding: 5px 10px;
+  border-radius: 6px; }
+
+.item {
+  display: flex;
+  align-items: center;
+  margin: 5px 7.5px; }
+
+.item .clear {
+  font-size: 18px;
+  top: 0;
+  right: 0;
+  opacity: 0.1;
+  z-index: 1;
+  margin-left: 0.5px;
+  padding: 5px; }
+  .item .clear:hover {
+    opacity: 1;
+    cursor: pointer; }
+
+.get {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline-width: 0;
+  font-weight: 600;
+  color: #7a808a;
+  min-width: 100px;
+  padding: 0 28px;
+  height: 36px;
+  border-radius: 35px;
+  background: none;
+  border: 1px solid #e6edf4;
+  transition: all 150ms ease-out;
+  font-family: "Avenir-Thin", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .get:hover {
+    color: #1c2023;
+    cursor: pointer; }
+
+.recommendation {
+  position: relative;
+  margin-top: 25px; }
+
+.song {
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px; }
+
+.thumbnail img {
+  object-fit: center;
+  width: 200px;
+  height: 200px; }
+  .thumbnail img:hover {
+    cursor: pointer; }
+
+.metadata {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.4rem;
+  padding-top: 20px;
+  width: 200px; }
+
+.name:hover {
+  cursor: pointer; }
+
+.artist {
+  font-size: 1rem;
+  color: #7a808a; }
+
+.loading {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 50px 0; }
+
+@keyframes loading {
+  from {
+    transform: scale(1); }
+  to {
+    transform: scale(2); } }
+
+.flute {
+  margin: 20px 0;
+  display: none;
+  background: url(images/flute.svg) center no-repeat;
+  min-width: 40px;
+  min-height: 40px;
+  animation-duration: 0.45s;
+  animation-name: loading;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; }
+
+@media screen and (max-width: 500px) {
+  header {
+    margin-top: 25px; } }
