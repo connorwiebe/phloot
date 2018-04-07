@@ -44,6 +44,8 @@ const normalizeSong = async song => {
   })
   if (image.results.length) {
     data.image = image.results[0].artworkUrl100.replace('100x100', '200x200')
+  }  else if (song.image[song.image.length-1]['#text']) {
+    data.image = song.image[song.image.length-1]['#text']
   } else {
     data.image = 'images/placeholder.png'
   }
