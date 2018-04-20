@@ -1,7 +1,3 @@
-@font-face {
-  font-family: Avenir-Thin;
-  src: url("fonts/Avenir/avenir-next-thin.ttf"); }
-
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,7 +8,10 @@ body {
   align-items: center;
   color: #1c2023;
   letter-spacing: -0.15px;
-  font: 14px "Avenir-Thin", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font: 14px "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; }
+
+h1 {
+  font-weight: 300; }
 
 a {
   text-decoration: none;
@@ -24,6 +23,9 @@ p {
 img, i {
   vertical-align: bottom; }
 
+body .visible {
+  opacity: 1; }
+
 .wrapper .show {
   display: flex; }
 
@@ -33,7 +35,9 @@ img, i {
   flex-direction: column;
   align-items: center;
   width: 90%;
-  min-height: 100vh; }
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 150ms ease-out; }
 
 header {
   display: flex;
@@ -68,7 +72,8 @@ input {
   font-size: 0.9rem;
   padding: 10px 12.5px;
   border: none;
-  color: #1c2023; }
+  color: #1c2023;
+  font: 14px "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; }
 
 ::-webkit-input-placeholder {
   color: #7a808a;
@@ -81,7 +86,7 @@ input {
 
 .item-artist {
   background: #f7f9fc;
-  color: #1C2023;
+  color: #7a808a;
   padding: 5px 10px;
   border-radius: 6px; }
 
@@ -91,13 +96,14 @@ input {
   margin: 5px 7.5px; }
 
 .item .clear {
-  font-size: 18px;
-  top: 0;
-  right: 0;
+  background: url(images/clear_big.svg) center no-repeat;
+  background-size: 18px 18px;
+  width: 18px;
+  height: 18px;
   opacity: 0.1;
-  z-index: 1;
   margin-left: 0.5px;
-  padding: 5px; }
+  padding: 5px;
+  transition: opacity 150ms ease-out; }
   .item .clear:hover {
     opacity: 1;
     cursor: pointer; }
@@ -108,7 +114,6 @@ input {
   align-items: center;
   justify-content: center;
   outline-width: 0;
-  font-weight: 600;
   color: #7a808a;
   min-width: 100px;
   padding: 0 28px;
@@ -117,23 +122,26 @@ input {
   background: none;
   border: 1px solid #e6edf4;
   transition: all 150ms ease-out;
-  font-family: "Avenir-Thin", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; }
   .get:hover {
     color: #1c2023;
     cursor: pointer; }
 
 .recommendation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-  margin-top: 25px; }
+  margin-top: 50px; }
 
 .song {
   display: none;
   align-items: center;
-  flex-direction: column;
-  margin: 20px; }
+  flex-direction: column; }
 
-.thumbnail img {
-  width: 200px;
+.video {
+  display: none;
+  width: 300px;
   height: 200px; }
 
 .metadata {
@@ -177,3 +185,7 @@ input {
 @media screen and (max-width: 500px) {
   header {
     margin-top: 25px; } }
+
+@media screen and (max-width: 400px) {
+  .video {
+    width: 300px; } }

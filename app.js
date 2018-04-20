@@ -9,8 +9,6 @@ const Promise = require('bluebird')
 const pug = require('pug')
 const compression = require('compression')
 const bodyParser = require('body-parser')
-const Bottleneck = require('bottleneck')
-const limiter = new Bottleneck({ minTime: 1000, highWater: 666 })
 app.listen(process.env.PORT || 6655)
 const dev = process.env.NODE_ENV === 'development' ? true : false
 if (!dev) app.use(compression({threshold:0}))
@@ -28,38 +26,24 @@ app.get('/', (req, res, next) => res.render('index'))
 // get song
 app.post('/song', async (req, res, next) => {
   const list = req.body.list.filter(item => item.artist !== '')
-  const r = await getRecommendations(1, list)
+  const r = await getRecommendation(list)
+  const result = await rp({
+    uri: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&order=relevance&q=${encodeURIComponent(`${r.artist} ${r.name}`)}&type=video&key=${process.env.YOUTUBE_API_KEY}`,
+    json: true
+  })
+  r.id = result.items[0].id.videoId
   res.json(r)
 })
 
+// get recommendation
 const normalizeSong = async song => {
-  let data
-  data = {
-    name: song.name,
-    artist: song.artist.name
-  }
-  let image = await rp({
-    uri: `https://itunes.apple.com/search?term=${encodeURIComponent(`${data.artist} ${data.name}`)}&limit=1&sort=popular&entity=song`,
-    json: true
-  })
-  if (image.results.length) {
-    data.image = image.results[0].artworkUrl100.replace('100x100', '200x200')
-  }  else if (song.image[song.image.length-1]['#text']) {
-    data.image = song.image[song.image.length-1]['#text']
-  } else {
-    data.image = 'images/placeholder.png'
-  }
-  return data
+  return { name: song.name, artist: song.artist.name }
 }
 
 const randomItem = array => Math.floor(Math.random() * array.length)
 
-async function getRecommendations (numResults, list) {
-  const randomSongs = []
-  for (let i = 0; i < numResults; i++) {
-    const randomSong = list[randomItem(list)]
-    randomSongs.push(randomSong)
-  }
+async function getRecommendation (list) {
+  const song = list[randomItem(list)]
   const getTrack = async item => {
     let artists = await rp({
       uri: `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${encodeURIComponent(item.artist)}&api_key=${process.env.LASTFM_API_KEY}&autocorrect=1&limit=25&format=json`,
@@ -75,7 +59,7 @@ async function getRecommendations (numResults, list) {
     const randomTrack = tracks[randomItem(tracks)]
     return await normalizeSong(randomTrack)
   }
-  return await Promise.map(randomSongs, item => {
-    return limiter.schedule(item => getTrack(item), item)
-  })
+  return await getTrack(song)
 }
+
+// TODO: add rate limiting

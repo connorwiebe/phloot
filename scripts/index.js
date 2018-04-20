@@ -1,18 +1,17 @@
 const $ = require('jquery')
 const storage = require('../helpers/storage')
-const loaded = require('image-loaded')
 
 // make
 const make = artist => `
   <div class='item'>
     <div class='item-artist'>${artist}</div>
-    <i class='material-icons clear'>clear</i>
+    <span class='clear'></span>
   </div>`
 
-const recommendation = song => `
+const r = song => `
   <div class='song'>
     <div class='thumbnail'>
-      <img src='${song.image}'>
+      <div class='play'></div>
     </div>
     <div class='metadata'>
       <p class='name'>${song.name}</p>
@@ -20,11 +19,16 @@ const recommendation = song => `
     </div>
   </div>`
 
+const video = id => `<iframe class="video" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allowfullscreen></iframe>`
+
 // list
 if (storage.get('list') === null) storage.set('list', [{artist:''}])
 const list = storage.get('list')
 list.forEach(item => {
   if (item.artist) $('.list').append(make(item.artist))
+  setTimeout(() => {
+    $('.wrapper').addClass('visible')
+  },25)
 })
 
 // search
@@ -52,21 +56,18 @@ $('body').on('click', '.clear', async e => {
 
 // get
 $('.get').on('click', async e => {
-  const song = $('.song')
-  song.fadeOut(() => song.remove())
-  $('.flute').fadeIn()
   const list = storage.get('list')
-  const songs = await fetch('/song', {
-    headers: new Headers({ 'content-type': 'application/json' }),
-    method: 'post',
-    body: JSON.stringify({ list })
-  }).then(res => res.json())
-  songs.forEach(song => {
-    $('.recommendation').append(recommendation(song))
-    loaded($('.thumbnail img')[0], (err, alreadyLoaded) => {
-      $('.flute').fadeOut(() => {
-        $('.song').fadeIn()
-      })
+  if (list.length > 1) {
+    $('.song,.video').fadeOut(() => $('.song,.video').remove())
+    $('.flute').fadeIn()
+    const song = await fetch('/song', {
+      headers: new Headers({ 'content-type': 'application/json' }),
+      method: 'post',
+      body: JSON.stringify({ list })
+    }).then(res => res.json())
+    $('.recommendation').append(video(song.id),r(song))
+    $('.flute').fadeOut(() => {
+      $('.song,.video').fadeIn()
     })
-  })
+  }
 })
